@@ -29,7 +29,7 @@ public class ZookeeperLock implements Lock
 
 
 	@Override
-	public boolean tryLock(long waitTime)
+	public boolean acquire(long waitTime)
 	{
 		boolean result = false;
         try {
@@ -46,10 +46,8 @@ public class ZookeeperLock implements Lock
         return result;
 	}
 
-
-
 	@Override
-	public void unLock()
+	public void release()
 	{
         try {
             String lname = Thread.currentThread() + lockName;
@@ -61,21 +59,6 @@ public class ZookeeperLock implements Lock
         } catch (Exception e) {
             log.warn("释放锁失败", e);
         }
-	}
-
-
-
-	@Override
-	public void release()
-	{
-		try
-		{
-			lock.release();
-		}
-		catch (Exception e)
-		{
-			log.warn("释放锁失败", e);
-		}
 	}
 
 }

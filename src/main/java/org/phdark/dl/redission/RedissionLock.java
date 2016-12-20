@@ -24,7 +24,7 @@ public class RedissionLock implements Lock
 	}
 
 	@Override
-	public boolean tryLock(long waitTime)
+	public boolean acquire(long waitTime)
 	{
 		try
 		{
@@ -38,15 +38,12 @@ public class RedissionLock implements Lock
 	}
 
 	@Override
-	public void unLock()
-	{
-		lock.unlock();
-	}
-
-	@Override
 	public void release()
 	{
-		lock.delete();
+		if (lock!=null) {
+			lock.unlock();
+			lock.delete();
+		}
 	}
 
 }
